@@ -8,6 +8,28 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum ClassType {
+  First
+  Second
+  Third
+  Fourth
+  Fifth
+  Sixth
+  Seventh
+  Eighth
+  Ninth
+  Tenth
+  Eleventh
+  Twelfth
+  Degree
+}
+
+enum GenderType {
+  MALE
+  FEMALE
+  OTHERS
+}
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -18,4 +40,79 @@ model User{
   id String @id @default(uuid())
   username String @unique
   password String
+}
+
+model Branch{
+  id String @id @default(uuid())
+  name String
+  head String
+  contact String
+  address String
+  place String
+  pincode Int
+  students Student[]
+}
+
+model Student{
+  id String @id @default(uuid())
+  name String
+  class ClassType
+  academicYear DateTime
+  dateOfBirth DateTime
+  gender GenderType
+  religion String
+  caste String
+  aadharNo BigInt
+  mobileNo BigInt
+  address String
+  pincode Int
+  motherTongue String
+  bloodGroup String
+  father Boolean
+  mother Boolean
+  staysWith String
+
+  branchId String
+  branch Branch @relation(fields: [branchId], references: [id])
+
+  parent Parent[]
+  sibling Sibling[]
+  previousRecord PreviousRecord[]
+}
+
+model Parent{
+  id String @id @default(uuid())
+  name String
+  qualification String
+  occupation String
+  aadharNo BigInt
+  mobileNo BigInt
+  income BigInt
+
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
+}
+
+model Sibling{
+  id String @id @default(uuid())
+  name String
+  gender GenderType
+  age Int
+  class ClassType
+  nameOfSchool String
+
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
+}
+
+model PreviousRecord{
+  id String @id @default(uuid())
+  name String
+  place String
+  class ClassType
+  yearOfStudy DateTime
+  percentage String
+
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
 }
