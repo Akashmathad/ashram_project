@@ -17,6 +17,8 @@ const getStudent = async (branchId: string, studentId: string) => {
     },
     include: {
       parent: true,
+      previousRecord: true,
+      sibling: true,
     },
   });
   return student;
@@ -25,6 +27,7 @@ const getStudent = async (branchId: string, studentId: string) => {
 const page = async ({ params }: pageProps) => {
   const { branchId, studentId } = params;
   const studentDetails = await getStudent(branchId, studentId);
+  console.log(studentDetails);
   return (
     <div className="text-3xl">
       {studentDetails?.name}
@@ -33,6 +36,20 @@ const page = async ({ params }: pageProps) => {
         className={buttonVariants()}
       >
         Add Parent
+      </Link>
+
+      <Link
+        href={`/student/${branchId}/${studentId}/addPreviousRecord`}
+        className={buttonVariants()}
+      >
+        Add Record
+      </Link>
+
+      <Link
+        href={`/student/${branchId}/${studentId}/addSibling`}
+        className={buttonVariants()}
+      >
+        Add Sibling
       </Link>
     </div>
   );
