@@ -8,6 +8,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum ParentType {
+  Father
+  Mother
+  Guardain
+}
+
 enum ClassType {
   First
   Second
@@ -84,6 +90,7 @@ model Parent{
   id String @id @default(uuid())
   name String
   qualification String
+  type ParentType
   occupation String
   aadharNo BigInt
   mobileNo BigInt
@@ -91,6 +98,8 @@ model Parent{
 
   studentId String
   student Student @relation(fields: [studentId], references: [id])
+
+  @@unique([studentId, type], name: "UniqueParentTypePerStudent")
 }
 
 model Sibling{
