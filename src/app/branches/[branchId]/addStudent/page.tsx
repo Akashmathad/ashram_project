@@ -37,7 +37,6 @@ interface pageProps {
 
 const Page: FC<pageProps> = ({ params }) => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<StudentValidatorTypes>({
     resolver: zodResolver(StudentValidator),
   });
