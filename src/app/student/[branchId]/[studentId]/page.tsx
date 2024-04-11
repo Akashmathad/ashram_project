@@ -51,6 +51,13 @@ const page = async ({ params }: pageProps) => {
       >
         Add Sibling
       </Link>
+
+      <Link
+        href={`/student/${branchId}/${studentId}/updateStudent`}
+        className={buttonVariants()}
+      >
+        Update Student
+      </Link>
     </div>
   );
 };
