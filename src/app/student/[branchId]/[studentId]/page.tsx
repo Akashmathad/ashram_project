@@ -1,3 +1,5 @@
+import DemoteStudent from '@/components/DemoteStudent';
+import PromoteStudent from '@/components/PromoteStudent';
 import { buttonVariants } from '@/components/ui/button';
 import { db } from '@/lib/db';
 import Link from 'next/link';
@@ -31,6 +33,7 @@ const page = async ({ params }: pageProps) => {
   return (
     <div className="text-3xl">
       {studentDetails?.name}
+      {studentDetails?.class}
       <Link
         href={`/student/${branchId}/${studentId}/addParent`}
         className={buttonVariants()}
@@ -58,6 +61,19 @@ const page = async ({ params }: pageProps) => {
       >
         Update Student
       </Link>
+      {studentDetails?.class !== 'Degree' && (
+        <PromoteStudent
+          studentId={studentId}
+          studentClass={studentDetails?.class || ''}
+        />
+      )}
+
+      {studentDetails?.class !== 'First' && (
+        <DemoteStudent
+          studentId={studentId}
+          studentClass={studentDetails?.class || ''}
+        />
+      )}
     </div>
   );
 };
