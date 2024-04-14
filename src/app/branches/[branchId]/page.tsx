@@ -1,5 +1,7 @@
+import BackButton from '@/components/BackButton';
 import { buttonVariants } from '@/components/ui/button';
 import { db } from '@/lib/db';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -10,9 +12,15 @@ interface pageProps {
 }
 
 const getBranch = async (id: string) => {
-  const branchDetails = await db.branch.findUnique({
+  const branchDetails = await db.branch.findFirst({
     where: {
       id,
+    },
+  });
+
+  const totalStudentCount = await db.student.count({
+    where: {
+      branchId: id,
     },
   });
 
@@ -26,27 +34,45 @@ const getBranch = async (id: string) => {
     },
   });
 
-  return { branchDetails, studentCounts };
+  return { branchDetails, studentCounts, totalStudentCount };
 };
 
 const page = async ({ params }: pageProps) => {
   const { branchId } = params;
-  const { branchDetails, studentCounts } = await getBranch(branchId);
-  console.log(branchDetails, studentCounts);
+  const { branchDetails, studentCounts, totalStudentCount } = await getBranch(
+    branchId
+  );
   return (
-    <div>
-      {branchDetails?.name}
-      <Link href={`${branchId}/addStudent`} className={buttonVariants()}>
-        Add Student
-      </Link>
-      {studentCounts.map((count) => (
-        <div key={count.class}>
-          <Link href={`/branches/${branchId}/${count.class}`}>
-            <p>{count.class}</p>
-            <p>{count._count.class}</p>
+    <div className="container py-8">
+      <div className="flex flex-col lg:flex-row gap-6 justify-between items-center">
+        <h1 className="text-4xl lg:text-5xl text-center lg:text-left leading-[1.3]">
+          {branchDetails?.name} ({totalStudentCount})
+        </h1>
+
+        <div className="flex gap-4 w-full lg:w-fit">
+          <BackButton />
+          <Link
+            href={`${branchId}/addStudent`}
+            className={cn('w-full', buttonVariants())}
+          >
+            Add Student
           </Link>
         </div>
-      ))}
+      </div>
+
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {studentCounts.map((count) => (
+          <div key={count.class}>
+            <Link
+              href={`/branches/${branchId}/${count.class}`}
+              className="p-8 flex flex-col gap-2 justify-center items-center bg-card border rounded-md hover:scale-[1.05] duration-300 shadow-md"
+            >
+              <p className="text-3xl font-bold tracking-wide">{count.class}</p>
+              <p className="text-xl">Students: {count._count.class}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
