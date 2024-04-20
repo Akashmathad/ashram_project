@@ -18,6 +18,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import BackButton from '@/components/BackButton';
 
 const Page = () => {
   const router = useRouter();
@@ -71,114 +72,125 @@ const Page = () => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name of Branch</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <div className="flex w-full p-10 items-center justify-center">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-1  w-full max-w-lg  border border-zinc-500 bg-card p-6 shadow-lg duration-200  sm:rounded-lg"
+        >
+          <h2 className="text-3xl font-semibold text-center text-primary">
+            Branch details
+          </h2>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name of Branch</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="head"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Head of branch</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Headmaster / Principal"
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="head"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Head of branch</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Headmaster / Principal"
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="contact"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contact Number</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter contact number.."
-                  type="text"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="contact"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contact Number</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter contact number.."
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Address</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Enter your address..." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Enter your address..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="place"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Place</FormLabel>
-              <FormControl>
-                <Input placeholder="Town / City..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="place"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Place</FormLabel>
+                <FormControl>
+                  <Input placeholder="Town / City..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="pincode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pincode</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter pincode"
-                  type="text" // Change type to text since we're handling parsing
-                  value={field.value} // No need to parse here
-                  onChange={(e) => {
-                    // Ensure that the value is always stored as a string in the form state
-                    const parsedValue = parseInt(e.target.value);
-                    field.onChange(isNaN(parsedValue) ? '' : parsedValue); // Ensure value is a number, otherwise set to empty string
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="pincode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pincode</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter pincode"
+                    type="text" // Change type to text since we're handling parsing
+                    value={field.value} // No need to parse here
+                    onChange={(e) => {
+                      // Ensure that the value is always stored as a string in the form state
+                      const parsedValue = parseInt(e.target.value);
+                      field.onChange(isNaN(parsedValue) ? '' : parsedValue); // Ensure value is a number, otherwise set to empty string
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button isLoading={isPending} type="submit">
-          Submit
-        </Button>
-      </form>
-    </Form>
+          <div className="flex gap-3 mt-3">
+            <BackButton />
+            <Button isLoading={isPending} type="submit" className="w-full">
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
 

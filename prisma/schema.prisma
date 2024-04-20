@@ -8,6 +8,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+        
+
 enum ParentType {
   Father
   Mother
@@ -35,13 +42,6 @@ enum GenderType {
   FEMALE
   OTHERS
 }
-
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
 model User{
   id String @id @default(uuid())
   username String @unique
@@ -77,9 +77,11 @@ model Student{
   father Boolean
   mother Boolean
   staysWith String
+  imageDownload String
+  imageDisplay String
 
   branchId String
-  branch Branch @relation(fields: [branchId], references: [id])
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
 
   parent Parent[]
   sibling Sibling[]
@@ -97,7 +99,7 @@ model Parent{
   income BigInt
 
   studentId String
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, type], name: "UniqueParentTypePerStudent")
 }
@@ -111,7 +113,7 @@ model Sibling{
   nameOfSchool String
 
   studentId String
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model PreviousRecord{
@@ -123,5 +125,5 @@ model PreviousRecord{
   percentage String
 
   studentId String
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }

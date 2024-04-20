@@ -1,4 +1,5 @@
 'use client';
+import BackButton from '@/components/BackButton';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -91,119 +92,136 @@ const Page: FC<pageProps> = ({ params }) => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="age"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Age</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter age"
-                  type="text"
-                  value={field.value}
-                  onChange={(e) => {
-                    const parsedValue = parseInt(e.target.value);
-                    field.onChange(isNaN(parsedValue) ? '' : parsedValue);
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="gender"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Gender</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <div className="flex w-full min-h-screen items-center justify-center">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-1  w-full max-w-lg  border border-zinc-500 bg-card p-6 shadow-lg duration-200  sm:rounded-lg"
+        >
+          <h2 className="text-3xl font-semibold text-center text-primary">
+            Sibling details
+          </h2>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Gender" />
-                  </SelectTrigger>
+                  <Input placeholder="Name..." type="text" {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="MALE">MALE</SelectItem>
-                  <SelectItem value="FEMALE">FEMALE</SelectItem>
-                  <SelectItem value="OTHERS">OTHERS</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="nameOfSchool"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name of School</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="class"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Class</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <FormField
+            control={form.control}
+            name="age"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Age</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select class" />
-                  </SelectTrigger>
+                  <Input
+                    placeholder="Enter age"
+                    type="text"
+                    value={field.value}
+                    onChange={(e) => {
+                      const parsedValue = parseInt(e.target.value);
+                      field.onChange(isNaN(parsedValue) ? '' : parsedValue);
+                    }}
+                  />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="First">First</SelectItem>
-                  <SelectItem value="Second">Second</SelectItem>
-                  <SelectItem value="Third">Third</SelectItem>
-                  <SelectItem value="Fourth">Fourth</SelectItem>
-                  <SelectItem value="Fifth">Fifth</SelectItem>
-                  <SelectItem value="Sixth">Sixth</SelectItem>
-                  <SelectItem value="Seventy">Seventy</SelectItem>
-                  <SelectItem value="Eighth">Eighth</SelectItem>
-                  <SelectItem value="Ninth">Ninth</SelectItem>
-                  <SelectItem value="Tenth">Tenth</SelectItem>
-                  <SelectItem value="Eleventh">Eleventh</SelectItem>
-                  <SelectItem value="Twelfth">Twelfth</SelectItem>
-                  <SelectItem value="Degree">Degree</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button isLoading={isPending} type="submit">
-          Submit
-        </Button>
-      </form>
-    </Form>
+          <FormField
+            control={form.control}
+            name="gender"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Gender" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="MALE">MALE</SelectItem>
+                    <SelectItem value="FEMALE">FEMALE</SelectItem>
+                    <SelectItem value="OTHERS">OTHERS</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="nameOfSchool"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name of School</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="class"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Class</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select class" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="First">First</SelectItem>
+                    <SelectItem value="Second">Second</SelectItem>
+                    <SelectItem value="Third">Third</SelectItem>
+                    <SelectItem value="Fourth">Fourth</SelectItem>
+                    <SelectItem value="Fifth">Fifth</SelectItem>
+                    <SelectItem value="Sixth">Sixth</SelectItem>
+                    <SelectItem value="Seventy">Seventy</SelectItem>
+                    <SelectItem value="Eighth">Eighth</SelectItem>
+                    <SelectItem value="Ninth">Ninth</SelectItem>
+                    <SelectItem value="Tenth">Tenth</SelectItem>
+                    <SelectItem value="Eleventh">Eleventh</SelectItem>
+                    <SelectItem value="Twelfth">Twelfth</SelectItem>
+                    <SelectItem value="Degree">Degree</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex gap-3 mt-3">
+            <BackButton />
+            <Button isLoading={isPending} type="submit" className="w-full">
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
 

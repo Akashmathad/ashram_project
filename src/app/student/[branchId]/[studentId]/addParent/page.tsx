@@ -1,4 +1,5 @@
 'use client';
+import BackButton from '@/components/BackButton';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -90,120 +91,134 @@ const Page: FC<pageProps> = ({ params }) => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name of Parent</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Parent Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <div className="flex w-full min-h-screen items-center justify-center">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-1  w-full max-w-lg  border border-zinc-500 bg-card p-6 shadow-lg duration-200  sm:rounded-lg"
+        >
+          <h2 className="text-3xl font-semibold text-center text-primary">
+            Parent details
+          </h2>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name of Parent</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select One" />
-                  </SelectTrigger>
+                  <Input placeholder="Name..." type="text" {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="Father">Father</SelectItem>
-                  <SelectItem value="Mother">Mother</SelectItem>
-                  <SelectItem value="Guardian">Guardian</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="qualification"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Qualification</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Parent Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select One" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Father">Father</SelectItem>
+                    <SelectItem value="Mother">Mother</SelectItem>
+                    <SelectItem value="Guardian">Guardian</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="occupation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Occupation</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="qualification"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Qualification</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="aadharNo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Aadhar Number</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="occupation"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Occupation</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="mobileNo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mobile Number</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="aadharNo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Aadhar Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="income"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Income</FormLabel>
-              <FormControl>
-                <Input placeholder="Name..." type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="mobileNo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mobile Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button isLoading={isPending} type="submit">
-          Submit
-        </Button>
-      </form>
-    </Form>
+          <FormField
+            control={form.control}
+            name="income"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Income</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name..." type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex gap-3 mt-3">
+            <BackButton />
+            <Button isLoading={isPending} type="submit" className="w-full">
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
 
