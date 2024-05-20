@@ -1,6 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { BranchValidator } from '@/lib/validators/branch';
 import { StudentValidator } from '@/lib/validators/student';
 import { z } from 'zod';
 
@@ -33,6 +32,8 @@ export async function POST(req: Request) {
       branchId,
     } = StudentValidator.parse(body);
 
+    console.log('hello');
+
     await db.student.create({
       //@ts-ignore
       data: {
@@ -58,6 +59,7 @@ export async function POST(req: Request) {
 
     return new Response('OK');
   } catch (error) {
+    console.log(error);
     if (error instanceof z.ZodError) {
       return new Response(error.message, { status: 422 });
     }

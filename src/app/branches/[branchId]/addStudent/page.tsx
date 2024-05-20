@@ -82,15 +82,16 @@ const Page: FC<pageProps> = ({ params }) => {
       }
       console.log(err);
       toast({
-        title: 'Branch creation failed',
+        title: 'Student creation failed',
         description: 'Something went wrong, please try again.',
         variant: 'destructive',
       });
     },
     onSuccess: () => {
       router.refresh();
+      router.back();
       toast({
-        title: 'Branch creation successful',
+        title: 'Student creation successful',
       });
     },
   });

@@ -77,8 +77,8 @@ model Student{
   father Boolean
   mother Boolean
   staysWith String
-  imageDownload String
-  imageDisplay String
+  imageDownload String?
+  imageDisplay String?
 
   branchId String
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
