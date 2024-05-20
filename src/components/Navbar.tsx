@@ -1,5 +1,7 @@
 import { HomeIcon } from 'lucide-react';
 import { ModeToggle } from './ModeToggle';
+import { Button } from './ui/button';
+import Link from 'next/link';
 
 const Navbar = () => {
   return (
@@ -11,7 +13,16 @@ const Navbar = () => {
           </span>
           Arsha Vidya
         </h2>
-        <ModeToggle />
+        <div className="flex items-center justify-center gap-3">
+          <Link href="/branches/addUser">
+            <Button>Add User</Button>
+          </Link>
+
+          <Link href="/branches/removeUser">
+            <Button>Remove User</Button>
+          </Link>
+          <ModeToggle />
+        </div>
       </div>
     </div>
   );
