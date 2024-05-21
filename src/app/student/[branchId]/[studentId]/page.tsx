@@ -1,6 +1,6 @@
 import DemoteStudent from '@/components/DemoteStudent';
 import PromoteStudent from '@/components/PromoteStudent';
-import { buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { db } from '@/lib/db';
@@ -33,11 +33,21 @@ const getStudent = async (branchId: string, studentId: string) => {
 const page = async ({ params }: pageProps) => {
   const { branchId, studentId } = params;
   const studentDetails = await getStudent(branchId, studentId);
+  console.log(studentDetails);
   //@ts-ignore
   const { parent, sibling, previousRecord } = studentDetails;
   return (
     <div className="p-10">
-      <div className="container border bg-card p-6 shadow-lg duration-200  sm:rounded-lg border-zinc-500 light:border-zinc-300 flex flex-col gap-6">
+      <div className="container border bg-card p-6 shadow-lg duration-200  sm:rounded-lg border-zinc-500 light:border-zinc-300 flex flex-col gap-6 relative">
+        <Link
+          href={`/student/${branchId}/${studentId}/upload`}
+          className="absolute top-3 right-3"
+        >
+          <Button>
+            {studentDetails?.imageDownload ? 'Update Image' : 'Upload Image'}
+          </Button>
+        </Link>
+
         <h2 className="text-5xl text-center text-primary font-semibold">
           {studentDetails?.name}&apos;s details
         </h2>
@@ -77,11 +87,18 @@ const page = async ({ params }: pageProps) => {
               </div>
             </div>
 
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Willy-Nilly_My_Passport_Size_Photo.jpg/373px-Willy-Nilly_My_Passport_Size_Photo.jpg"
-              alt="student-photo"
-              className="w-[40%] justify-self-center"
-            />
+            {studentDetails?.imageDownload ? (
+              <Image
+                priority
+                src={studentDetails?.imageDownload}
+                height={500}
+                width={500}
+                alt="student-photo"
+                className="w-[40%] justify-self-center"
+              />
+            ) : (
+              <p>No Image</p>
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-10">
