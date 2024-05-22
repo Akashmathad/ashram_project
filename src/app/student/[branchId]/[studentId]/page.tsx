@@ -1,3 +1,6 @@
+import DeleteParent from '@/components/DeleteParent';
+import DeleteRecord from '@/components/DeleteRecord';
+import DeleteSibling from '@/components/DeleteSibling';
 import DemoteStudent from '@/components/DemoteStudent';
 import PromoteStudent from '@/components/PromoteStudent';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -36,6 +39,7 @@ const page = async ({ params }: pageProps) => {
   console.log(studentDetails);
   //@ts-ignore
   const { parent, sibling, previousRecord } = studentDetails;
+
   return (
     <div className="p-10">
       <div className="container border bg-card p-6 shadow-lg duration-200  sm:rounded-lg border-zinc-500 light:border-zinc-300 flex flex-col gap-6 relative">
@@ -251,9 +255,13 @@ const page = async ({ params }: pageProps) => {
 
         {previousRecord.map((p: PreviousRecord) => (
           <div key={p.id} className="text-xl mt-5 flex flex-col gap-5">
-            <h2 className="text-4xl text-center text-primary font-semibold">
-              {studentDetails?.name}&apos;s previous school details
-            </h2>
+            <div className="flex justify-between pl-4 pr-4">
+              <h2 className="text-4xl text-primary font-semibold">
+                {studentDetails?.name}&apos;s previous school details
+              </h2>
+              <DeleteRecord recordId={p.id} />
+            </div>
+
             <div className="grid grid-cols-2 gap-10">
               <div className="flex gap-3 items-center">
                 <p className="font-semibold">Name:</p>
@@ -314,9 +322,12 @@ const page = async ({ params }: pageProps) => {
 
         {parent.map((p: Parent) => (
           <div key={p.id} className="text-xl mt-5 flex flex-col gap-5">
-            <h2 className="text-4xl text-center text-primary font-semibold">
-              {studentDetails?.name}&apos;s {p.type}
-            </h2>
+            <div className="flex justify-between pl-4 pr-4">
+              <h2 className="text-4xl text-primary font-semibold">
+                {studentDetails?.name}&apos;s {p.type}
+              </h2>
+              <DeleteParent parentId={p.id} />
+            </div>
             <div className="grid grid-cols-2 gap-10">
               <div className="flex gap-3 items-center">
                 <p className="font-semibold">Name:</p>
@@ -387,10 +398,14 @@ const page = async ({ params }: pageProps) => {
 
         {sibling.map((p: Sibling) => (
           <div key={p.id} className="text-xl mt-5 flex flex-col gap-5">
-            <h2 className="text-4xl text-center text-primary font-semibold">
-              {studentDetails?.name}&apos;s{' '}
-              {p.gender === 'MALE' ? 'Brother' : 'Sister'}
-            </h2>
+            <div className="flex justify-between pl-4 pr-4">
+              <h2 className="text-4xl text-primary font-semibold">
+                {studentDetails?.name}&apos;s{' '}
+                {p.gender === 'MALE' ? 'Brother' : 'Sister'}
+              </h2>
+              <DeleteSibling siblingId={p.id} />
+            </div>
+
             <div className="grid grid-cols-2 gap-10">
               <div className="flex gap-3 items-center">
                 <p className="font-semibold">Name:</p>

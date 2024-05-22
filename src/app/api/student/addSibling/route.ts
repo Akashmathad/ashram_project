@@ -1,6 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { RecordValidator } from '@/lib/validators/previousRecord';
 import { SiblingValidator } from '@/lib/validators/sibling';
 import { z } from 'zod';
 
@@ -46,5 +45,23 @@ export async function POST(req: Request) {
     }
 
     return new Response('Could not add parent', { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getAuthSession();
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const siblingId = searchParam.get('siblingId');
+
+    if (!session?.user) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    await db.sibling.delete({ where: { id: siblingId ?? '' } });
+    return new Response('OK');
+  } catch (error) {
+    return new Response('Could not delete Parent', { status: 500 });
   }
 }

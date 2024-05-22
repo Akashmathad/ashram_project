@@ -40,11 +40,32 @@ export async function POST(req: Request) {
 
     return new Response('OK');
   } catch (error) {
-    //add unique constraint error
     if (error instanceof z.ZodError) {
       return new Response(error.message, { status: 422 });
     }
 
     return new Response('Could not add student', { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getAuthSession();
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const parentId = searchParam.get('parentId');
+
+    if (!session?.user) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    await db.parent.delete({
+      where: {
+        id: parentId ?? '',
+      },
+    });
+    return new Response('OK');
+  } catch (error) {
+    return new Response('Could not delete Parent', { status: 500 });
   }
 }

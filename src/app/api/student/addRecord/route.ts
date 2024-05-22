@@ -34,8 +34,6 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log(record);
-
     return new Response('OK');
   } catch (error) {
     console.log(error);
@@ -45,5 +43,23 @@ export async function POST(req: Request) {
     }
 
     return new Response('Could not add parent', { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getAuthSession();
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const recordId = searchParam.get('recordId');
+
+    if (!session?.user) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    await db.previousRecord.delete({ where: { id: recordId ?? '' } });
+    return new Response('OK');
+  } catch (error) {
+    return new Response('Could not delete Parent', { status: 500 });
   }
 }
