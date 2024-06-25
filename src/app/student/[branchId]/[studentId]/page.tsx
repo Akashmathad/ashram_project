@@ -62,6 +62,7 @@ const page = async ({ params }: pageProps) => {
             <DeleteImage studentId={studentDetails.id} />
           ) : (
             <DeleteStudent
+              studentName={studentDetails?.name || ''}
               branchId={branchId}
               studentId={studentId}
               studentClass={studentDetails?.class ?? ''}

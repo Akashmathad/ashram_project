@@ -1,22 +1,26 @@
 'use client';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
 import axios, { AxiosError } from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
+import Alert from './Alert';
 
 interface DeleteParentProps {
   branchId: string;
   studentId: string;
   studentClass: string;
+  studentName: string;
 }
 
 const DeleteStudent: FC<DeleteParentProps> = ({
   studentId,
   studentClass,
   branchId,
+  studentName,
 }) => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { mutate: deleteStudent, isPending } = useMutation({
     mutationFn: async () => {
@@ -29,7 +33,7 @@ const DeleteStudent: FC<DeleteParentProps> = ({
       if (err instanceof AxiosError) {
         if (err.response?.status === 404) {
           return toast({
-            title: 'Parent not found',
+            title: 'Student not found',
             variant: 'destructive',
           });
         }
@@ -53,9 +57,17 @@ const DeleteStudent: FC<DeleteParentProps> = ({
   });
 
   return (
-    <Button isLoading={isPending} onClick={() => deleteStudent()}>
-      Delete Student
-    </Button>
+    <div>
+      <Button onClick={() => setOpen(!open)}>Delete Student</Button>
+      {open && (
+        <Alert
+          handleCancel={setOpen}
+          handleSubmit={deleteStudent}
+          displayString={`Are you sure, you want to delete ${studentName}'s details completely?`}
+          isLoading={isPending}
+        />
+      )}
+    </div>
   );
 };
 
