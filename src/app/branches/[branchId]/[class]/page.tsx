@@ -35,7 +35,7 @@ const page = async ({ params }: pageProps) => {
         </h1>
 
         <div className="flex gap-4 w-full lg:w-fit">
-          <BackButton />
+          <BackButton path={`/branches/${params.branchId}`} />
         </div>
       </div>
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-4">

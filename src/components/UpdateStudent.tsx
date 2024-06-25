@@ -485,7 +485,9 @@ const UpdateStudent: FC<pageProps> = ({ params, student }) => {
 
             <div className="mt-4">
               {' '}
-              <BackButton />
+              <BackButton
+                path={`/student/${params.branchId}/${params.studentId}`}
+              />
             </div>
 
             <Button isLoading={isPending} type="submit" className="w-full mt-4">

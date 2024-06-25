@@ -183,7 +183,7 @@ const Page = () => {
           />
 
           <div className="flex gap-3 mt-3">
-            <BackButton />
+            <BackButton path="/branches" />
             <Button isLoading={isPending} type="submit" className="w-full">
               Submit
             </Button>

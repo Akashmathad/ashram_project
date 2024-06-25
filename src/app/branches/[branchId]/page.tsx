@@ -51,7 +51,7 @@ const page = async ({ params }: pageProps) => {
         </h1>
 
         <div className="flex gap-4 w-full lg:w-fit">
-          <BackButton />
+          <BackButton path="/branches" />
           <DeleteBranch
             branchId={branchId}
             branchName={branchDetails?.name || ''}

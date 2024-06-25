@@ -442,7 +442,7 @@ const Page: FC<pageProps> = ({ params }) => {
 
             <div className="mt-4">
               {' '}
-              <BackButton />
+              <BackButton path={`/branches/${params.branchId}`} />
             </div>
 
             <Button isLoading={isPending} type="submit" className="w-full mt-4">
