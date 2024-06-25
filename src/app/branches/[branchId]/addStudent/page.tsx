@@ -80,7 +80,7 @@ const Page: FC<pageProps> = ({ params }) => {
           return router.push('/');
         }
       }
-      console.log(err);
+
       toast({
         title: 'Student creation failed',
         description: 'Something went wrong, please try again.',
@@ -97,7 +97,6 @@ const Page: FC<pageProps> = ({ params }) => {
   });
 
   function onSubmit(values: StudentValidatorTypes) {
-    console.log(values);
     createStudent(values);
   }
 
@@ -396,7 +395,7 @@ const Page: FC<pageProps> = ({ params }) => {
               name="mother"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Father</FormLabel>
+                  <FormLabel>Mother</FormLabel>
                   <Select
                     value={
                       field.value === undefined

@@ -40,7 +40,6 @@ const getStudent = async (branchId: string, studentId: string) => {
 const page = async ({ params }: pageProps) => {
   const { branchId, studentId } = params;
   const studentDetails = await getStudent(branchId, studentId);
-  console.log(studentDetails);
   //@ts-ignore
   const { parent, sibling, previousRecord } = studentDetails;
 

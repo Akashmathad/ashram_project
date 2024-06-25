@@ -66,7 +66,7 @@ const PromoteStudent: FC<PromoteStudentProps> = ({
           return router.push('/');
         }
       }
-      console.log(err);
+
       toast({
         title: 'Student promotion failed',
         description: 'Something went wrong, please try again.',

@@ -70,7 +70,7 @@ const Page: FC<pageProps> = ({ params }) => {
           return router.push('/');
         }
       }
-      console.log(err);
+
       toast({
         title: 'Record addtion failed',
         description: 'Something went wrong, please try again.',
@@ -87,7 +87,6 @@ const Page: FC<pageProps> = ({ params }) => {
   });
 
   const onSubmit = async (values: RecordValidatorTypes) => {
-    console.log(values);
     addRecord(values);
   };
 

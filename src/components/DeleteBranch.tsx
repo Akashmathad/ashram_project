@@ -51,7 +51,7 @@ const DeleteBranch: FC<DeleteBranchProps> = ({ branchId, branchName }) => {
 
   return (
     <div>
-      <Button onClick={() => setOpen(!open)}>Delete Student</Button>
+      <Button onClick={() => setOpen(!open)}>Delete Branch</Button>
       {open && (
         <Alert
           handleCancel={setOpen}

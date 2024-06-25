@@ -12,10 +12,12 @@ const page = async () => {
   const session = await getAuthSession();
   const branches = await getBranches();
 
-  console.log(branches);
-
   if (!session?.user) {
     redirect('/');
+  }
+
+  if (branches.length === 0) {
+    return <h1 className="mt-20 text-center text-4xl">No Branches found</h1>;
   }
 
   return (

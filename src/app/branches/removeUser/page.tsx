@@ -75,7 +75,6 @@ const Page = () => {
 
   const onSubmit = async (values: DeleteUserRequest) => {
     deleteUser(values);
-    console.log(values);
   };
 
   return (

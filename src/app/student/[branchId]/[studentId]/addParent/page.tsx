@@ -69,7 +69,6 @@ const Page: FC<pageProps> = ({ params }) => {
           return router.push('/');
         }
       }
-      console.log(err);
       toast({
         title: 'Parent addtion failed',
         description: 'Something went wrong, please try again.',
@@ -86,7 +85,6 @@ const Page: FC<pageProps> = ({ params }) => {
   });
 
   const onSubmit = async (values: ParentValidatorTypes) => {
-    console.log(values);
     addParent(values);
   };
 

@@ -26,8 +26,14 @@ export const StudentValidator = z.object({
   gender: z.enum(GenderTypeValues),
   religion: z.string(),
   caste: z.string(),
-  aadharNo: z.string(),
-  mobileNo: z.string(),
+  aadharNo: z
+    .string()
+    .min(12, { message: 'Minimum length is 12' })
+    .max(12, { message: 'Maximum length is 12' }),
+  mobileNo: z
+    .string()
+    .min(10, { message: 'Minimum length is 10' })
+    .max(10, { message: 'Maximum length is 10' }),
   address: z.string(),
   pincode: z.number(),
   motherTongue: z.string(),

@@ -72,7 +72,6 @@ const Page = () => {
 
   const onSubmit = async (values: AddUserRequest) => {
     addUser(values);
-    console.log(values);
   };
 
   return (

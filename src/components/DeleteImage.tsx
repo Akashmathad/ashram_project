@@ -31,7 +31,7 @@ const DeleteImage: FC<DeleteImageProps> = ({ studentId }) => {
           return router.push('/');
         }
       }
-      console.log(err);
+
       toast({
         title: 'Image delation failed',
         description: 'Something went wrong, please try again.',

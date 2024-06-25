@@ -1,14 +1,29 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { google } from 'googleapis';
 import path from 'path';
 import { Readable } from 'stream';
-
-import credentials from '../../../../lib/credentials.json';
-import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 const auth = new google.auth.GoogleAuth({
-  credentials: credentials,
+  credentials: {
+    type: process.env.GOOGLE_SERVICE_ACCOUNT_TYPE,
+    project_id: process.env.GOOGLE_SERVICE_ACCOUNT_PROJECT_ID,
+    private_key_id: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY_ID,
+    //@ts-ignore
+    private_key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY.replace(
+      /\\n/g,
+      '\n'
+    ),
+    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL,
+    client_id: process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_ID,
+    //@ts-ignore
+    auth_uri: process.env.GOOGLE_SERVICE_ACCOUNT_AUTH_URI,
+    token_uri: process.env.GOOGLE_SERVICE_ACCOUNT_TOKEN_URI,
+    auth_provider_x509_cert_url:
+      process.env.GOOGLE_SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url:
+      process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_X509_CERT_URL,
+  },
+
   scopes: ['https://www.googleapis.com/auth/drive'],
 });
 

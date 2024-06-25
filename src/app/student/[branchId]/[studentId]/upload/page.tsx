@@ -47,7 +47,7 @@ const Page: FC<pageProps> = ({ params }) => {
           return router.push('/');
         }
       }
-      console.log(err);
+
       toast({
         title: 'Image upload failed',
         description: 'Something went wrong, please try again.',

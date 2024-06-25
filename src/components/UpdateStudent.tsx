@@ -121,7 +121,7 @@ const UpdateStudent: FC<pageProps> = ({ params, student }) => {
           return router.push('/');
         }
       }
-      console.log(err);
+
       toast({
         title: 'Student updation failed',
         description: 'Something went wrong, please try again.',
@@ -138,7 +138,6 @@ const UpdateStudent: FC<pageProps> = ({ params, student }) => {
   });
 
   function onSubmit(values: StudentValidatorTypes) {
-    console.log(values);
     updateStudent(values);
   }
 
