@@ -88,3 +88,67 @@ export async function POST(req: Request) {
     return new Response('Error in file upload', { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    // const session = await getAuthSession();
+
+    // if (!session?.user) {
+    //   return new Response('Unauthorized', { status: 401 });
+    // }
+
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const studentId = searchParam.get('studentId');
+
+    if (!studentId) {
+      return new Response('No studentId found', { status: 404 });
+    }
+
+    const student = await db.student.findFirst({
+      where: {
+        id: studentId ?? '',
+      },
+    });
+
+    if (!student) {
+      return new Response('Student not found', { status: 409 });
+    }
+
+    const { imageDisplay, imageDownload } = student;
+
+    if (!imageDisplay || !imageDownload) {
+      return new Response('No image links found for the student', {
+        status: 404,
+      });
+    }
+
+    // Extract the fileId from the imageDisplay URL
+    const fileIdMatch = imageDisplay.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    const fileId = fileIdMatch ? fileIdMatch[1] : null;
+
+    if (!fileId) {
+      return new Response('No fileId found in the URL', { status: 404 });
+    }
+
+    await drive.files.delete({
+      fileId: fileId,
+    });
+
+    await db.student.update({
+      where: {
+        id: studentId ?? '',
+      },
+      data: {
+        imageDownload: null,
+        imageDisplay: null,
+      },
+    });
+
+    console.log(`File ${fileId} deleted successfully`);
+    return new Response('File deleted successfully', { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response('Error in file deletion', { status: 500 });
+  }
+}

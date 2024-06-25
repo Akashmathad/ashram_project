@@ -35,3 +35,21 @@ export async function POST(req: Request) {
     return new Response('Could not create branch', { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getAuthSession();
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const branchId = searchParam.get('branchId');
+
+    if (!session?.user) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    await db.branch.delete({ where: { id: branchId || '' } });
+    return new Response('OK');
+  } catch (error) {
+    return new Response('Could not delete student', { status: 500 });
+  }
+}

@@ -1,5 +1,6 @@
 import BackButton from '@/components/BackButton';
-import { buttonVariants } from '@/components/ui/button';
+import DeleteBranch from '@/components/DeleteBranch';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { db } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -51,6 +52,10 @@ const page = async ({ params }: pageProps) => {
 
         <div className="flex gap-4 w-full lg:w-fit">
           <BackButton />
+          <DeleteBranch
+            branchId={branchId}
+            branchName={branchDetails?.name || ''}
+          />
           <Link
             href={`${branchId}/addStudent`}
             className={cn('w-full', buttonVariants())}

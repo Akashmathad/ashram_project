@@ -1,7 +1,10 @@
+import DeleteImage from '@/components/DeleteImage';
 import DeleteParent from '@/components/DeleteParent';
 import DeleteRecord from '@/components/DeleteRecord';
 import DeleteSibling from '@/components/DeleteSibling';
+import DeleteStudent from '@/components/DeleteStudent';
 import DemoteStudent from '@/components/DemoteStudent';
+import { ModeToggle } from '@/components/ModeToggle';
 import PromoteStudent from '@/components/PromoteStudent';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +31,7 @@ const getStudent = async (branchId: string, studentId: string) => {
       parent: true,
       previousRecord: true,
       sibling: true,
+      branch: true,
     },
   });
   return student;
@@ -41,16 +45,34 @@ const page = async ({ params }: pageProps) => {
   const { parent, sibling, previousRecord } = studentDetails;
 
   return (
-    <div className="p-10">
-      <div className="container border bg-card p-6 shadow-lg duration-200  sm:rounded-lg border-zinc-500 light:border-zinc-300 flex flex-col gap-6 relative">
+    <div className="p-10 pt-16 relative">
+      <div className="absolute top-2 right-4 flex gap-3 items-center">
+        <h1 className="text-xl">{studentDetails?.branch.name}</h1>
         <Link
-          href={`/student/${branchId}/${studentId}/upload`}
-          className="absolute top-3 right-3"
+          href={`/branches/${branchId}/${studentDetails?.class}`}
+          className={buttonVariants({ variant: 'secondary' })}
         >
-          <Button>
-            {studentDetails?.imageDownload ? 'Update Image' : 'Upload Image'}
-          </Button>
+          Back
         </Link>
+        <ModeToggle />
+      </div>
+      <div className="container border bg-card p-6 shadow-lg duration-200  sm:rounded-lg border-zinc-500 light:border-zinc-300 flex flex-col gap-6 relative">
+        <div className="absolute top-3 right-3 flex  gap-4">
+          {studentDetails?.imageDisplay ? (
+            <DeleteImage studentId={studentDetails.id} />
+          ) : (
+            <DeleteStudent
+              branchId={branchId}
+              studentId={studentId}
+              studentClass={studentDetails?.class ?? ''}
+            />
+          )}
+          <Link href={`/student/${branchId}/${studentId}/upload`}>
+            <Button>
+              {studentDetails?.imageDownload ? 'Update Image' : 'Upload Image'}
+            </Button>
+          </Link>
+        </div>
 
         <h2 className="text-5xl text-center text-primary font-semibold">
           {studentDetails?.name}&apos;s details
@@ -101,7 +123,9 @@ const page = async ({ params }: pageProps) => {
                 className="w-[40%] justify-self-center"
               />
             ) : (
-              <p>No Image</p>
+              <p className="flex items-center justify-center text-2xl font-bold">
+                No Image
+              </p>
             )}
           </div>
 

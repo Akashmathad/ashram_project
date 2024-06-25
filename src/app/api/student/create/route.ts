@@ -67,3 +67,21 @@ export async function POST(req: Request) {
     return new Response('Could not add student', { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getAuthSession();
+    const url = new URL(req.url);
+    const searchParam = new URLSearchParams(url.searchParams);
+    const studentId = searchParam.get('studentId');
+
+    if (!session?.user) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    await db.student.delete({ where: { id: studentId ?? '' } });
+    return new Response('OK');
+  } catch (error) {
+    return new Response('Could not delete student', { status: 500 });
+  }
+}
